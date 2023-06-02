@@ -2,7 +2,13 @@ import React from "react";
 
 import TextField from "@mui/material/TextField";
 
-export default function Search({ userInputHandler }) {
+import {UserInputHandler} from "../type";
+
+type Prop = {
+  userInputHandler: UserInputHandler;
+}
+
+export default function Search({ userInputHandler }:Prop) {
   return (
     <div>
       <TextField

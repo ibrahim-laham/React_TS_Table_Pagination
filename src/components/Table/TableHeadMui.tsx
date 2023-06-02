@@ -3,10 +3,16 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 
-export default function TableHeadMui({ columns }) {
+import {Column} from "../../type";
+
+type Prop = {
+  columns: Column[];
+}
+
+export default function TableHeadMui({ columns }:Prop) {
   return (
-    <TableHead>
-      <TableRow>
+    <TableHead >
+      <TableRow >
         {columns.map((column) => (
           <TableCell
             key={column.id}

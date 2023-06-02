@@ -1,66 +1,86 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 
-import TableBodyMui from "../components/Table/TableBodyMui";
-import TableHeadMui from "../components/Table/TableHeadMui";
+import TableBodyMui from "./Table/TableBodyMui";
+import TableHeadMui from "./Table/TableHeadMui";
 
-const columns = [
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "region", label: "region", minWidth: 100 },
+import {Column,CountryData,CreateData} from "../type";
+
+type Prop = {
+  result: CountryData[];
+}
+
+const columns: Column[] = [
+  { id: "name", label: "Name", minWidth: 170, align: "center", format: undefined, },
+  { id: "region", label: "region", minWidth: 100, align: "center", format: undefined,  },
   {
     id: "Population",
     label: "Population",
     minWidth: 170,
-    align: "right",
+    align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "size",
-    label: "size\u00a0(km\u00b2)",
+    id: "languages",
+    label: "languages",
     minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+    align: "center",
+    format: undefined,
   },
   {
     id: "Flag",
     label: "Flag",
     minWidth: 170,
-    align: "right",
-    format: "image",
+    align: "center",
+    format: undefined ,
   },
 ];
 
-export default function CountryList({ result }) {
-  function createData(name, region, Population, size, Flag) {
-    return { name, region, Population, size, Flag };
+export default function CountryList({ result }:Prop) {
+  function createData(name:string, region:string, Population: number, languages: string[], Flag:string[]):CreateData {
+    return { name, region, Population, languages, Flag };
   }
 
-  const rows = [];
+  const rows: CreateData[] = [];
 
-  result.map((country) => {
-    const { name, region, population, area, flags, maps } = country;
+  result.map((country: CountryData ) => {
+    const { name, region, population, languages, flags, maps } = country;
     const commonName = name.common;
     const countryFlags = flags.svg;
     const countryMap = maps.googleMaps;
-    return rows.push(
-      createData(commonName, region, population, area, [
+    let countryLanguages: string[] = [];
+    if(languages){
+     countryLanguages = Object.values(languages);
+     rows.push(
+      createData(commonName, region, population, countryLanguages , [
         countryFlags,
         countryMap,
       ])
     );
+    }else {
+      countryLanguages = ["no language"]
+      rows.push(
+        createData(commonName, region, population, countryLanguages , [
+          countryFlags,
+          countryMap,
+        ])
+      );
+    }
+    console.log(countryLanguages);
+    return 
   });
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage:number):void => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
@@ -69,11 +89,11 @@ export default function CountryList({ result }) {
     <Paper
       color="primary"
       className="table"
-      sx={{ width: "50%", overflow: "hidden", marginTop: "2vh" }}
+      sx={{ width: "50vw", marginTop: "2vh" }}
     >
       <TableContainer
         className="table"
-        sx={{ maxHeight: 440, backgroundColor: "#c32c2c" }}
+        sx={{  backgroundColor: "#c32c2c",width: "100%", marginTop: "2vh", overflow: "visible" }}
       >
         <Table stickyHeader aria-label="sticky table">
           <TableHeadMui columns={columns} />

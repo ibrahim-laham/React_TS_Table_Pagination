@@ -1,26 +1,41 @@
-import React from "react";
-
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import Typography from "@mui/material/Typography";
 import TableBody from "@mui/material/TableBody";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-export default function TableBodyMui({ rows, page, rowsPerPage, columns }) {
+import {Link} from "react-router-dom";
+
+import { CreateData, Column } from "../../type";
+
+type Prop = {
+  rows: CreateData[];
+  page: number;
+  rowsPerPage: number;
+  columns: Column[];
+};
+
+export default function TableBodyMui({
+  rows,
+  page,
+  rowsPerPage,
+  columns,
+}: Prop) {
   return (
-    <TableBody>
+    <TableBody >
       {rows
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((row) => {
           return (
             <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
-              {columns.map((column) => {
-                const value = row[column.id];
+              {columns.map((column: Column) => {
+                const value: any = row[column.id];
                 return (
                   <TableCell key={column.id} align={column.align}>
                     {column.format && typeof value === "number"
                       ? column.format(value)
                       : null}
-                    {column.format === "image" ? (
+                    {column.id === "Flag" ? (
                       <div
                         style={{
                           display: "flex",
@@ -28,23 +43,26 @@ export default function TableBodyMui({ rows, page, rowsPerPage, columns }) {
                           alignItems: "center",
                         }}
                       >
-                        <Typography
-                          sx={{ marginRight: "1vw", textAlign: "left" }}
-                          variant="caption"
-                        >
-                          Click on the flag to see the map
-                        </Typography>
                         <a href={value[1]} target="_blank" rel="noreferrer">
                           <img
-                            style={{ width: "2vw" }}
+                            style={{ width:"5vw" }}
                             src={value[0]}
                             alt="flag"
                           />
                         </a>
+                        <Link to="/country-detail" style={{textDecoration: "none", color: "black", width:"2vw"}} ><ArrowForwardIosIcon sx={{marginLeft: "1.5vw"}} /></Link>
                       </div>
                     ) : (
-                      value
+                      null
                     )}
+                    {
+                    column.id === "languages" ?
+                      <ul>{value.map((lang: string) => <li>{lang}</li>)}</ul>
+                      : null
+                    }
+                    {
+                      column.id === "name" || column.id ==="region" ? value : null
+                    }
                   </TableCell>
                 );
               })}

@@ -1,12 +1,15 @@
 import "./App.css";
-
-import { createTheme, ThemeProvider } from "@mui/material";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { CountryData } from "./type";
+import { Routes, Route } from "react-router-dom";
+
+import { createTheme, ThemeProvider } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 
 import CountryList from "./components/CountryList";
-import Search from "./components/Search";
+import NavBar from "./components/NavBar/NavBar";
+import CountryDetail from "./components/CountryDetail";
 
 const theme = createTheme({
   typography: {
@@ -24,9 +27,9 @@ const theme = createTheme({
 });
 
 function App() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<CountryData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState<CountryData[]>([]);
   const url = "https://restcountries.com/v3.1/all";
 
   async function getData() {
@@ -45,7 +48,7 @@ function App() {
     getData();
   }, []);
 
-  function userInputHandler(event) {
+  function userInputHandler(event: React.ChangeEvent<HTMLInputElement>) {
     const userInput = event.target.value;
     setResult(
       data.filter((item) =>
@@ -60,8 +63,12 @@ function App() {
     return (
       <ThemeProvider theme={theme}>
         <div className="App">
-          <Search userInputHandler={userInputHandler} />
-          <CountryList result={result} />
+          <NavBar userInputHandler={userInputHandler} />
+          {/* <Search userInputHandler={userInputHandler} /> */}
+          <Routes>
+            <Route path="/" element={<CountryList result={result} />} />
+            <Route path="/country-detail" element={<CountryDetail />} />
+          </Routes>
         </div>
       </ThemeProvider>
     );
