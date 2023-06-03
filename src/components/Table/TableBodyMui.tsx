@@ -1,18 +1,21 @@
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import Typography from "@mui/material/Typography";
 import TableBody from "@mui/material/TableBody";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
 
 import { Link } from "react-router-dom";
 
-import { CreateData, Column } from "../../type";
+import { CreateData, Column, CountryData } from "../../type";
 
 type Prop = {
   rows: CreateData[];
   page: number;
   rowsPerPage: number;
   columns: Column[];
+  setFavoritesList: React.Dispatch<React.SetStateAction<CreateData[]>>;
+  favoritesList: CreateData[];
 };
 
 export default function TableBodyMui({
@@ -20,12 +23,25 @@ export default function TableBodyMui({
   page,
   rowsPerPage,
   columns,
+  setFavoritesList,
+  favoritesList
 }: Prop) {
+
+  
+
   return (
     <TableBody>
       {rows
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((row) => {
+          function favoritesHandler () {
+            setFavoritesList([...favoritesList, row ]);
+            favoritesList.map(favorite => {
+              if(favorite.name === row.name) {
+                setFavoritesList(favoritesList.filter(favorite => favorite.name !== row.name));
+              }
+            })
+          };
           return (
             <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
               {columns.map((column: Column) => {
@@ -61,12 +77,13 @@ export default function TableBodyMui({
                         >
                           <ArrowForwardIosIcon sx={{ marginLeft: "1.5vw" }} />
                         </Link>
+                        <FavoriteIcon onClick={favoritesHandler} sx={{cursor: "pointer", color: favoritesList.map(favorite => (favorite.name === row.name)? "red": null)}} />
                       </div>
                     ) : null}
                     {column.id === "languages" ? (
                       <ul>
-                        {row[column.id].map((lang: string) => (
-                          <li>{lang}</li>
+                        {row[column.id].map((lang: string,index:number) => (
+                          <li key={index}>{lang}</li>
                         ))}
                       </ul>
                     ) : null}

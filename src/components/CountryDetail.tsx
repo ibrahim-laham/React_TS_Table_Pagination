@@ -36,7 +36,14 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-export default function CountryDetail() {
+type Prop = {
+  detailIsLoading: boolean;
+  detailResult: CountryData[];
+  setDetailIsLoading:  React.Dispatch<React.SetStateAction<boolean>>;
+  setDetailResult:  React.Dispatch<React.SetStateAction<CountryData[]>>;
+}
+
+export default function CountryDetail({detailIsLoading, detailResult, setDetailIsLoading, setDetailResult }:Prop) {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -44,24 +51,24 @@ export default function CountryDetail() {
   };
 
   const detail = useParams();
-  const [isLoading, setIsLoading] = useState(true);
-  const [result, setResult] = useState<CountryData[]>([]);
-  async function getData(url: string) {
+  async function getDetail(url: string) {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      setIsLoading(false);
-      setResult(data);
+      setDetailIsLoading(false);
+      setDetailResult(data);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    getData(`https://restcountries.com/v3.1/name/${detail.id}`);
+    getDetail(`https://restcountries.com/v3.1/name/${detail.id}`);
   }, [detail.id]);
 
-  if (isLoading) {
+  
+
+  if (detailIsLoading) {
     return <CircularProgress color="success" />;
   } else {
     return (
@@ -69,7 +76,7 @@ export default function CountryDetail() {
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              {result[0]?.name.common.slice(0, 1)}
+              {detailResult[0]?.name.common.slice(0, 1)}
             </Avatar>
           }
           action={
@@ -77,34 +84,34 @@ export default function CountryDetail() {
               <MoreVertIcon />
             </IconButton>
           }
-          title={result[0]?.name.official}
-          subheader={result[0]?.capital}
+          title={detailResult[0]?.name.official}
+          subheader={detailResult[0]?.capital}
         />
         <CardMedia
           component="img"
           height="194"
-          image={result[0]?.flags.svg}
+          image={detailResult[0]?.flags.svg}
           alt="Paella dish"
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             the country belongs to{" "}
-            <span style={{ color: "lightskyblue" }}>{result[0]?.region}</span>{" "}
+            <span style={{ color: "lightskyblue" }}>{detailResult[0]?.region}</span>{" "}
             region and{" "}
             <span style={{ color: "lightskyblue" }}>
-              {result[0]?.subregion}
+              {detailResult[0]?.subregion}
             </span>{" "}
             sub-region. Located at the{" "}
             <span style={{ color: "lightskyblue" }}>
-              {result[0]?.latlng[0]}
+              {detailResult[0]?.latlng[0]}
             </span>{" "}
             &#176;N and{" "}
             <span style={{ color: "lightskyblue" }}>
-              {result[0]?.latlng[1]}
+              {detailResult[0]?.latlng[1]}
             </span>{" "}
             &#176;W, this country has population of{" "}
             <span style={{ color: "lightskyblue" }}>
-              {result[0]?.population}
+              {detailResult[0]?.population}
             </span>{" "}
             and it has gained it's independence, according to the CIA Worlf
             Factbook.
@@ -125,7 +132,7 @@ export default function CountryDetail() {
               alignItems: "center",
             }}
           >
-            <a href={result[0]?.maps.googleMaps} style={{ color: "white" }} target="_blank" rel="noreferrer">
+            <a href={detailResult[0]?.maps.googleMaps} style={{ color: "white" }} target="_blank" rel="noreferrer">
               <LocationOnIcon />
             </a>
           </IconButton>

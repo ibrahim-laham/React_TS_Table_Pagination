@@ -11,6 +11,8 @@ import {Column,CountryData,CreateData} from "../type";
 
 type Prop = {
   result: CountryData[];
+  setFavoritesList: React.Dispatch<React.SetStateAction<CreateData[]>>;
+  favoritesList: CreateData[];
 }
 
 const columns: Column[] = [
@@ -37,7 +39,7 @@ const columns: Column[] = [
   },
 ];
 
-export default function CountryList({ result }:Prop) {
+export default function CountryList({ result, setFavoritesList, favoritesList}:Prop) {
   function createData(name:string, region:string, Population: number, languages: string[], Flag:string[]):CreateData {
     return { name, region, Population, languages, Flag };
   }
@@ -98,6 +100,8 @@ export default function CountryList({ result }:Prop) {
             page={page}
             rowsPerPage={rowsPerPage}
             columns={columns}
+            setFavoritesList={setFavoritesList}
+            favoritesList={favoritesList}
           />
         </Table>
       </TableContainer>
