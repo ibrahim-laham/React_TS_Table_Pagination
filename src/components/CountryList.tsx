@@ -14,28 +14,26 @@ type Prop = {
 }
 
 const columns: Column[] = [
-  { id: "name", label: "Name", minWidth: 170, align: "center", format: undefined, },
-  { id: "region", label: "region", minWidth: 100, align: "center", format: undefined,  },
+  { id: "name", label: "Name", minWidth: 170, align: "center" },
+  { id: "region", label: "region", minWidth: 100, align: "center"   },
   {
     id: "Population",
     label: "Population",
     minWidth: 170,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
+    format: (value:number) => value.toLocaleString("en-US"),
   },
   {
     id: "languages",
     label: "languages",
     minWidth: 170,
     align: "center",
-    format: undefined,
   },
   {
     id: "Flag",
     label: "Flag",
     minWidth: 170,
     align: "center",
-    format: undefined ,
   },
 ];
 
@@ -54,7 +52,7 @@ export default function CountryList({ result }:Prop) {
     let countryLanguages: string[] = [];
     if(languages){
      countryLanguages = Object.values(languages);
-     rows.push(
+    return rows.push(
       createData(commonName, region, population, countryLanguages , [
         countryFlags,
         countryMap,
@@ -62,21 +60,19 @@ export default function CountryList({ result }:Prop) {
     );
     }else {
       countryLanguages = ["no language"]
-      rows.push(
+      return rows.push(
         createData(commonName, region, population, countryLanguages , [
           countryFlags,
           countryMap,
         ])
       );
     }
-    console.log(countryLanguages);
-    return 
   });
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage:number):void => {
+  const handleChangePage= (event: unknown, newPage:number):void => {
     setPage(newPage);
   };
 
@@ -89,7 +85,7 @@ export default function CountryList({ result }:Prop) {
     <Paper
       color="primary"
       className="table"
-      sx={{ width: "50vw", marginTop: "2vh" }}
+      sx={{ width: "100%", marginTop: "2vh" }}
     >
       <TableContainer
         className="table"

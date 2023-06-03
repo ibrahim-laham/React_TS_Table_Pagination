@@ -67,7 +67,7 @@ function App() {
           {/* <Search userInputHandler={userInputHandler} /> */}
           <Routes>
             <Route path="/" element={<CountryList result={result} />} />
-            <Route path="/country-detail" element={<CountryDetail />} />
+            <Route path="/:id" element={<CountryDetail />} />
           </Routes>
         </div>
       </ThemeProvider>
