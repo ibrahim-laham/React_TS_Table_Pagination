@@ -67,10 +67,10 @@ export default function CountryDetail({
       console.log(error);
     }
   }
-
+  
   useEffect(() => {
     getDetail();
-  }, []);
+  }, );
 
   if (detailIsLoading) {
     return <CircularProgress color="success" />;
