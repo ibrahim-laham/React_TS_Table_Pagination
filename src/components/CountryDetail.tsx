@@ -54,9 +54,10 @@ export default function CountryDetail({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
   const detail = useParams();
-  async function getDetail(url: string) {
+  const url = `https://restcountries.com/v3.1/name/${detail.id}`;
+
+  async function getDetail() {
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -68,8 +69,8 @@ export default function CountryDetail({
   }
 
   useEffect(() => {
-    getDetail(`https://restcountries.com/v3.1/name/${detail.id}`);
-  }, [detail.id]);
+    getDetail();
+  }, []);
 
   if (detailIsLoading) {
     return <CircularProgress color="success" />;

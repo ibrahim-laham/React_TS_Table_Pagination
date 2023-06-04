@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
@@ -9,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 
 import { Link } from "react-router-dom";
 
-import { CreateData, Column, CountryData } from "../../type";
+import { CreateData, Column } from "../../type";
 
 type Prop = {
   rows: CreateData[];
@@ -35,12 +34,12 @@ export default function TableBodyMui({
         .map((row) => {
           function favoritesHandler() {
             setFavoritesList([...favoritesList, row]);
-            favoritesList.map((favorite) => {
+            favoritesList.map((favorite) => { 
               if (favorite.name === row.name) {
-                setFavoritesList(
+               return setFavoritesList(
                   favoritesList.filter((favorite) => favorite.name !== row.name)
                 );
-              }
+              } else {return null}
             });
           }
           return (
