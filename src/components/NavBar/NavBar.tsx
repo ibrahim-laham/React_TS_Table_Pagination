@@ -18,10 +18,11 @@ import PublicIcon from "@mui/icons-material/Public";
 
 import { Link } from "react-router-dom";
 
-import { UserInputHandler } from "../../type";
+import { UserInputHandler, CreateData } from "../../type";
 
 type Prop = {
   userInputHandler: UserInputHandler;
+  favoritesList: CreateData[];
 };
 
 const Search = styled("div")(({ theme }) => ({
@@ -64,7 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function NavBar({ userInputHandler }: Prop) {
+export default function NavBar({ userInputHandler,favoritesList }: Prop) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -135,7 +136,7 @@ export default function NavBar({ userInputHandler }: Prop) {
             aria-label="show 4 new mails"
             color="inherit"
           >
-            <Badge badgeContent={4} color="error">
+            <Badge color="error">
               <HomeIcon />
             </Badge>
           </IconButton>
@@ -149,7 +150,7 @@ export default function NavBar({ userInputHandler }: Prop) {
             aria-label="show 17 new notifications"
             color="inherit"
           >
-            <Badge badgeContent={17} color="error">
+            <Badge badgeContent={favoritesList.length} color="error">
               <FavoriteIcon />
             </Badge>
           </IconButton>
@@ -172,7 +173,7 @@ export default function NavBar({ userInputHandler }: Prop) {
   );
 
   return (
-    <Box sx={{ flexGrow: 1, width: "100%" }}>
+    <Box sx={{ flexGrow: 1, width: "100%"}}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -210,7 +211,7 @@ export default function NavBar({ userInputHandler }: Prop) {
                 aria-label="show 4 new mails"
                 color="inherit"
               >
-                <Badge badgeContent={4} color="error">
+                <Badge color="error">
                   <HomeIcon />
                 </Badge>
               </IconButton>
@@ -221,7 +222,7 @@ export default function NavBar({ userInputHandler }: Prop) {
                 aria-label="show 17 new notifications"
                 color="inherit"
               >
-                <Badge badgeContent={17} color="error">
+                <Badge badgeContent={favoritesList.length} color="error">
                   <FavoriteIcon />
                 </Badge>
               </IconButton>

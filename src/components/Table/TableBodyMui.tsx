@@ -1,9 +1,11 @@
+import { useState } from "react";
+
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-
+import IconButton from "@mui/material/IconButton";
 
 import { Link } from "react-router-dom";
 
@@ -24,24 +26,23 @@ export default function TableBodyMui({
   rowsPerPage,
   columns,
   setFavoritesList,
-  favoritesList
+  favoritesList,
 }: Prop) {
-
-  
-
   return (
     <TableBody>
       {rows
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((row) => {
-          function favoritesHandler () {
-            setFavoritesList([...favoritesList, row ]);
-            favoritesList.map(favorite => {
-              if(favorite.name === row.name) {
-                setFavoritesList(favoritesList.filter(favorite => favorite.name !== row.name));
+          function favoritesHandler() {
+            setFavoritesList([...favoritesList, row]);
+            favoritesList.map((favorite) => {
+              if (favorite.name === row.name) {
+                setFavoritesList(
+                  favoritesList.filter((favorite) => favorite.name !== row.name)
+                );
               }
-            })
-          };
+            });
+          }
           return (
             <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
               {columns.map((column: Column) => {
@@ -60,7 +61,11 @@ export default function TableBodyMui({
                           alignItems: "center",
                         }}
                       >
-                        <a href={row[column.id][1]} target="_blank" rel="noreferrer">
+                        <a
+                          href={row[column.id][1]}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
                           <img
                             style={{ width: "5vw" }}
                             src={row[column.id][0]}
@@ -77,12 +82,20 @@ export default function TableBodyMui({
                         >
                           <ArrowForwardIosIcon sx={{ marginLeft: "1.5vw" }} />
                         </Link>
-                        <FavoriteIcon onClick={favoritesHandler} sx={{cursor: "pointer", color: favoritesList.map(favorite => (favorite.name === row.name)? "red": null)}} />
+                        <IconButton onClick={favoritesHandler} sx={{cursor: "pointer"/* ,color: "lightyellow" */}}>
+                          <FavoriteIcon
+                            sx={favoritesList.map((favorite) =>
+                              favorite.name === row.name
+                                ? { color: "gold"}
+                                : null
+                            )}
+                          />
+                        </IconButton>
                       </div>
                     ) : null}
                     {column.id === "languages" ? (
                       <ul>
-                        {row[column.id].map((lang: string,index:number) => (
+                        {row[column.id].map((lang: string, index: number) => (
                           <li key={index}>{lang}</li>
                         ))}
                       </ul>

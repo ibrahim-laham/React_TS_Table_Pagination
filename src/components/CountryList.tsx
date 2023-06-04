@@ -40,8 +40,8 @@ const columns: Column[] = [
 ];
 
 export default function CountryList({ result, setFavoritesList, favoritesList}:Prop) {
-  function createData(name:string, region:string, Population: number, languages: string[], Flag:string[]):CreateData {
-    return { name, region, Population, languages, Flag };
+  function createData(name:string, region:string, Population: number, languages: string[], Flag:string[],flagDescription:string):CreateData {
+    return { name, region, Population, languages, Flag, flagDescription };
   }
 
   const rows: CreateData[] = [];
@@ -50,6 +50,7 @@ export default function CountryList({ result, setFavoritesList, favoritesList}:P
     const { name, region, population, languages, flags, maps } = country;
     const commonName = name.common;
     const countryFlags = flags.svg;
+    const flagDescription = flags.alt;
     const countryMap = maps.googleMaps;
     let countryLanguages: string[] = [];
     if(languages){
@@ -58,7 +59,7 @@ export default function CountryList({ result, setFavoritesList, favoritesList}:P
       createData(commonName, region, population, countryLanguages , [
         countryFlags,
         countryMap,
-      ])
+      ], flagDescription)
     );
     }else {
       countryLanguages = ["no language"]
@@ -66,7 +67,7 @@ export default function CountryList({ result, setFavoritesList, favoritesList}:P
         createData(commonName, region, population, countryLanguages , [
           countryFlags,
           countryMap,
-        ])
+        ],flagDescription)
       );
     }
   });

@@ -70,7 +70,7 @@ function App() {
     return (
       <ThemeProvider theme={theme}>
         <div className="App">
-          <NavBar userInputHandler={userInputHandler} />
+          <NavBar userInputHandler={userInputHandler} favoritesList={favoritesList} />
           <Routes>
             <Route path="/" element={<CountryList result={result} favoritesList={favoritesList} setFavoritesList={setFavoritesList} />} />
             <Route path="/:id" element={<CountryDetail  setDetailResult={setDetailResult} setDetailIsLoading={setDetailIsLoading} detailIsLoading={detailIsLoading} detailResult={detailResult} />} />

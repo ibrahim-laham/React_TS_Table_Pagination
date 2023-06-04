@@ -4,7 +4,7 @@ export type CountryData = {
   subregion: string;
   population: number;
   area: number;
-  flags: {svg:string;};
+  flags: {svg:string; alt:string;};
   maps: {googleMaps: string;};
   languages: {[key:string]:string};
   capital: string[];
@@ -17,10 +17,11 @@ export type CreateData = {
   Population: number;
   languages: string[];
   Flag: string[];
+  flagDescription:string;
 }
 
 export interface Column {
-  id: 'name' | 'region' | 'Population' | 'languages' | 'Flag';
+  id: 'name' | 'region' | 'Population' | 'languages' | 'Flag'| "flagDescription";
   label: string;
   minWidth?: number;
   align?: 'center';
