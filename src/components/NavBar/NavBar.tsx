@@ -19,6 +19,7 @@ import PublicIcon from "@mui/icons-material/Public";
 import { Link } from "react-router-dom";
 
 import { UserInputHandler, CreateData } from "../../type";
+import RenderMenu from "./RenderMenu";
 
 type Prop = {
   userInputHandler: UserInputHandler;
@@ -65,115 +66,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function NavBar({ userInputHandler,favoritesList }: Prop) {
+export default function NavBar({ userInputHandler, favoritesList }: Prop) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const menuId = "primary-search-account-menu";
+  const mobileMenuId = "primary-search-account-menu-mobile";
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <Link to="/" style={{ color: "inherit" }}>
-          <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
-          >
-            <Badge color="error">
-              <HomeIcon />
-            </Badge>
-          </IconButton>
-        </Link>
-        <p>Home</p>
-      </MenuItem>
-      <MenuItem>
-        <Link to="/favorites" style={{ color: "inherit" }}>
-          <IconButton
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-          >
-            <Badge badgeContent={favoritesList.length} color="error">
-              <FavoriteIcon />
-            </Badge>
-          </IconButton>
-        </Link>
-        <p>Favorites</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <PublicIcon />
-        </IconButton>
-        <p>Public</p>
-      </MenuItem>
-    </Menu>
-  );
-
   return (
-    <Box sx={{ flexGrow: 1, width: "100%"}}>
+    <Box sx={{ flexGrow: 1, width: "100%" }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -253,8 +163,16 @@ export default function NavBar({ userInputHandler,favoritesList }: Prop) {
           </Box>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+      <RenderMenu
+        menuId={menuId}
+        mobileMenuId={mobileMenuId}
+        handleProfileMenuOpen={handleProfileMenuOpen}
+        favoritesList={favoritesList}
+        anchorEl={anchorEl}
+        setAnchorEl={setAnchorEl}
+        mobileMoreAnchorEl={mobileMoreAnchorEl}
+        setMobileMoreAnchorEl={setMobileMoreAnchorEl}
+      />
     </Box>
   );
 }

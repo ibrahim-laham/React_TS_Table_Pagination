@@ -82,11 +82,14 @@ export default function TableBodyMui({
                         >
                           <ArrowForwardIosIcon sx={{ marginLeft: "1.5vw" }} />
                         </Link>
-                        <IconButton onClick={favoritesHandler} sx={{cursor: "pointer"/* ,color: "lightyellow" */}}>
+                        <IconButton
+                          onClick={favoritesHandler}
+                          sx={{ cursor: "pointer" /* ,color: "lightyellow" */ }}
+                        >
                           <FavoriteIcon
                             sx={favoritesList.map((favorite) =>
                               favorite.name === row.name
-                                ? { color: "gold"}
+                                ? { color: "gold" }
                                 : null
                             )}
                           />

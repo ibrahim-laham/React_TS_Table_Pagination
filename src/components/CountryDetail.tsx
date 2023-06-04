@@ -39,11 +39,16 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 type Prop = {
   detailIsLoading: boolean;
   detailResult: CountryData[];
-  setDetailIsLoading:  React.Dispatch<React.SetStateAction<boolean>>;
-  setDetailResult:  React.Dispatch<React.SetStateAction<CountryData[]>>;
-}
+  setDetailIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setDetailResult: React.Dispatch<React.SetStateAction<CountryData[]>>;
+};
 
-export default function CountryDetail({detailIsLoading, detailResult, setDetailIsLoading, setDetailResult }:Prop) {
+export default function CountryDetail({
+  detailIsLoading,
+  detailResult,
+  setDetailIsLoading,
+  setDetailResult,
+}: Prop) {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -60,13 +65,11 @@ export default function CountryDetail({detailIsLoading, detailResult, setDetailI
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
   useEffect(() => {
     getDetail(`https://restcountries.com/v3.1/name/${detail.id}`);
   }, [detail.id]);
-
-  
 
   if (detailIsLoading) {
     return <CircularProgress color="success" />;
@@ -96,7 +99,9 @@ export default function CountryDetail({detailIsLoading, detailResult, setDetailI
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             the country belongs to{" "}
-            <span style={{ color: "lightskyblue" }}>{detailResult[0]?.region}</span>{" "}
+            <span style={{ color: "lightskyblue" }}>
+              {detailResult[0]?.region}
+            </span>{" "}
             region and{" "}
             <span style={{ color: "lightskyblue" }}>
               {detailResult[0]?.subregion}
@@ -132,7 +137,12 @@ export default function CountryDetail({detailIsLoading, detailResult, setDetailI
               alignItems: "center",
             }}
           >
-            <a href={detailResult[0]?.maps.googleMaps} style={{ color: "white" }} target="_blank" rel="noreferrer">
+            <a
+              href={detailResult[0]?.maps.googleMaps}
+              style={{ color: "white" }}
+              target="_blank"
+              rel="noreferrer"
+            >
               <LocationOnIcon />
             </a>
           </IconButton>
@@ -148,9 +158,7 @@ export default function CountryDetail({detailIsLoading, detailResult, setDetailI
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph>{detailResult[0]?.name.common}:</Typography>
-            <Typography paragraph>
-              {detailResult[0]?.flags.alt}
-            </Typography>
+            <Typography paragraph>{detailResult[0]?.flags.alt}</Typography>
           </CardContent>
         </Collapse>
       </Card>

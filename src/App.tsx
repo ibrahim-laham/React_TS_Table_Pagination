@@ -14,7 +14,7 @@ import Favorites from "./pages/Favorites";
 
 const theme = createTheme({
   typography: {
-    fontFamily: ['Libre Baskerville', "serif"].join(","),
+    fontFamily: ["Libre Baskerville", "serif"].join(","),
   },
   palette: {
     mode: "dark",
@@ -59,22 +59,55 @@ function App() {
         item.name.common.toLowerCase().includes(userInput.toLowerCase())
       )
     );
-  };
+  }
 
-  
-  
-  
+  function deleteFavoriteHandler(favorite: CreateData): void {
+    setFavoritesList(
+      favoritesList.filter((item) => item.name !== favorite.name)
+    );
+  }
+
   if (isLoading) {
     return <LinearProgress />;
   } else {
     return (
       <ThemeProvider theme={theme}>
         <div className="App">
-          <NavBar userInputHandler={userInputHandler} favoritesList={favoritesList} />
+          <NavBar
+            userInputHandler={userInputHandler}
+            favoritesList={favoritesList}
+          />
           <Routes>
-            <Route path="/" element={<CountryList result={result} favoritesList={favoritesList} setFavoritesList={setFavoritesList} />} />
-            <Route path="/:id" element={<CountryDetail  setDetailResult={setDetailResult} setDetailIsLoading={setDetailIsLoading} detailIsLoading={detailIsLoading} detailResult={detailResult} />} />
-            <Route path="/favorites" element={<Favorites favoritesList={favoritesList} />} />
+            <Route
+              path="/"
+              element={
+                <CountryList
+                  result={result}
+                  favoritesList={favoritesList}
+                  setFavoritesList={setFavoritesList}
+                />
+              }
+            />
+            <Route
+              path="/:id"
+              element={
+                <CountryDetail
+                  setDetailResult={setDetailResult}
+                  setDetailIsLoading={setDetailIsLoading}
+                  detailIsLoading={detailIsLoading}
+                  detailResult={detailResult}
+                />
+              }
+            />
+            <Route
+              path="/favorites"
+              element={
+                <Favorites
+                  favoritesList={favoritesList}
+                  deleteFavoriteHandler={deleteFavoriteHandler}
+                />
+              }
+            />
           </Routes>
         </div>
       </ThemeProvider>
