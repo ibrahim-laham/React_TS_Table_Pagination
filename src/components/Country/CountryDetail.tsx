@@ -19,7 +19,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
-import { CountryData } from "../type";
+import { CountryData } from "../../type";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
