@@ -4,8 +4,8 @@ import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 
-import TableBodyMui from "../Table/TableBodyMui";
-import TableHeadMui from "../Table/TableHeadMui";
+import TableBodyMui from "../../components/Table/TableBodyMui";
+import TableHeadMui from "../../components/Table/TableHeadMui";
 
 import {Column,CountryData,CreateData} from "../../type";
 

@@ -7,9 +7,9 @@ import { Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 
-import CountryList from "./components/Country/CountryList";
+import CountryList from "./pages/Country/CountryList";
 import NavBar from "./components/NavBar/NavBar";
-import CountryDetail from "./components/Country/CountryDetail";
+import CountryDetail from "./pages/Country/CountryDetail";
 import Favorites from "./pages/Favorites";
 
 const theme = createTheme({

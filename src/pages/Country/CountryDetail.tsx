@@ -67,10 +67,10 @@ export default function CountryDetail({
       console.log(error);
     }
   }
-  
+
   useEffect(() => {
     getDetail();
-  }, );
+  });
 
   if (detailIsLoading) {
     return <CircularProgress color="success" />;
@@ -129,24 +129,24 @@ export default function CountryDetail({
               <ArrowBackIosIcon />
             </IconButton>
           </Link>
-          <IconButton
-            aria-label="location"
-            sx={{
-              marginBottom: "0.8vh",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+          <a
+            href={detailResult[0]?.maps.googleMaps}
+            style={{ color: "white" }}
+            target="_blank"
+            rel="noreferrer"
           >
-            <a
-              href={detailResult[0]?.maps.googleMaps}
-              style={{ color: "white" }}
-              target="_blank"
-              rel="noreferrer"
+            <IconButton
+              aria-label="location"
+              sx={{
+                marginBottom: "0.8vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
               <LocationOnIcon />
-            </a>
-          </IconButton>
+            </IconButton>
+          </a>
           <ExpandMore
             expand={expanded}
             onClick={handleExpandClick}

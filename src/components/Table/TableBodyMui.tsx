@@ -34,14 +34,16 @@ export default function TableBodyMui({
         .map((row) => {
           function favoritesHandler() {
             setFavoritesList([...favoritesList, row]);
-            favoritesList.map((favorite) => { 
-              if (favorite.name === row.name) {
-               return setFavoritesList(
+           return favoritesList.map((favorite) => { 
+            if (favorite.name === row.name) {
+              return setFavoritesList(
                   favoritesList.filter((favorite) => favorite.name !== row.name)
                 );
-              } else {return null}
-            });
-          }
+                
+              } else {return null }
+            })
+          };
+
           return (
             <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
               {columns.map((column: Column) => {
